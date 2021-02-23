@@ -1,0 +1,57 @@
+@mixin breakpoint($point) {
+
+    @if $point == inch16 {
+        @media  only screen and (min-width: 1200px) and (max-width: 1530px) { @content; }
+    }
+    @else if $point == desktop {
+        @media  only screen and (min-width: 1031px) and (max-width: 1199px) { @content; }
+    }
+    @else if $point == tablet {
+        @media  only screen and (min-width: 992px) and (max-width: 1030px) { @content; }
+    }
+    @else if $point == tablet_portrait {
+        @media  only screen and (min-width: 700px) and (max-width: 991px) { @content; }
+    }
+    @else if $point == sm {
+        @media  only screen and (min-width: 479px) and (max-width: 699px) { @content; }
+    }
+    @else if $point == xs {
+        @media  only screen and (min-width: 300px) and (max-width: 479px) { @content; }
+    }
+
+}
+
+
+
+
+/*
+ * Generates classes for a grid of columns, prefixed by size.
+ * The result will be .col-[size]-[col]-[total-columns] E.g. .col-xs-6-12
+ *
+ * @param {string}	$size			The name of the size target (e.g. xs, sm, md, lg, xl, etc.)
+ * @param {int}		$grid-columns	Amount of columns
+ */
+// @mixin grid-generator($size, $grid-columns) {
+//     @for $i from 1 through $grid-columns {
+//         .col-#{$size}-#{$i}-#{$grid-columns} {
+//             width: percentage($i / $grid-columns);
+//             padding-left: 15px;
+//             padding-right: 15px;
+//         }
+//         .col-#{$size}-offset-#{$i}-#{$grid-columns} {
+//             margin-left: percentage($i / $grid-columns);
+//         }
+//     }
+// }
+
+
+// // Generating grid
+// @include grid-generator(xs, 3);
+// @include grid-generator(sm, 6);
+// @include grid-generator(md, 18);
+
+
+
+
+
+

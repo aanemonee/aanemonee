@@ -1,0 +1,11 @@
+{
+    "extends": "airbnb-base",
+    "parser": "@babel/eslint-parser",
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "linebreak-style": ["error", "windows"]
+        //  "allowShortCircuit": 1
+    }
+}

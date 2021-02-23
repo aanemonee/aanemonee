@@ -1,17 +1,10 @@
 @import "_mixin";
 
 body {
-    // display: grid;
-    // grid-template-areas: 
-    //     "header header header"
-    //     "intro intro intro"
-    //     "about about about"
-    //     "skills skills skills";
-    // grid-template-rows: auto;
     font-family: 'Poppins', sans-serif;
     color: #fff;
+    overflow: hidden;
 }
-
 * {
     box-sizing: border-box;
 }
@@ -494,12 +487,6 @@ a.nav-link:hover {
         padding: 0;
     }
     
-}
-.slider-item-one {
-
-}
-.slider-item-two {
-
 }
 .slider-item__image {
     width: 490px;

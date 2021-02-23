@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-restricted-globals */
+import smoothscroll from 'smoothscroll-polyfill';
+
 const introPageText = document.querySelector('.intro-page__text-greeting');
 const introPage = document.querySelector('.intro-page');
 const navMenu = document.querySelector('.navigation-mobile');
@@ -14,6 +16,7 @@ const sln = document.querySelector('.slider-line');
 const si = document.querySelectorAll('.slider-item');
 const headerContent = document.querySelector('.site-header__content');
 
+smoothscroll.polyfill();
 const clearName = (element) => {
   const elem = element;
   elem.innerText = 'Welcome';

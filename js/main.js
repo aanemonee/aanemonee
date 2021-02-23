@@ -14,6 +14,7 @@ const sln = document.querySelector('.slider-line');
 const si = document.querySelectorAll('.slider-item');
 const headerContent = document.querySelector('.site-header__content');
 
+// function
 const clearName = (element) => {
   const elem = element;
   elem.innerText = 'Welcome';
@@ -23,7 +24,7 @@ if (localStorage.getItem('name') !== null) {
   const userName = localStorage.getItem('name');
   introPageText.innerText = `Welcome, ${userName}!`;
 }
-
+// changing greeting text and saves nameValue to localStorage
 const sendName = (elem) => {
   const element = elem;
   const nameValue = document.querySelector('.svelte-input-name').value;
@@ -115,21 +116,21 @@ const bgAnimation = (el, box) => {
   }, 10));
 };
 let SKILLSLIDER = {};
-// eslint-disable-next-line consistent-return
-const test = () => {
+//  function switches grid and slider on skills-page
+function skillsPageGridOrSlider() {
   if (window.innerWidth > 1031) return false;
   skilsPageSlider.classList.add('skills-page__slider');
   skilsPageLine.classList.add('skills-page__slider-line');
   skillsPageItems.forEach((elem) => { elem.classList.add('skills-page__slider-item'); });
   SKILLSLIDER = new CustomSlider(skilsPageSlider, skilsPageLine, skillsPageItems);
   return SKILLSLIDER;
-};
+}
 const clearLocalStorage = () => {
   localStorage.clear();
 };
 // global event listener
 document.addEventListener('DOMContentLoaded', () => {
-  test();
+  skillsPageGridOrSlider();
   // eslint-disable-next-line consistent-return
   document.addEventListener('click', () => {
     const ROLE = event.target.dataset.role;
@@ -172,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
       case 'setName':
         sendName(introPageText);
-        // textChanger(introPageText, buttonFlag);
         break;
     }
   });

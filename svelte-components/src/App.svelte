@@ -21,30 +21,24 @@
 <div class="main-container">
 	<Header on:click={pageHandler}/>
 	{#if currentPage === 'homePage'}
-		<Home on:click={pageSwitcher}/>
+			<Home on:click={pageSwitcher}/>
 	{/if}
 	{#if currentPage === 'tryPage'}
 		<SecondPage on:click={pageSwitcher} />
 	{/if}
 
-</div>>
+</div>
 
 
 
 <style>
-	/* body {
-		width: 100%;
-		height: 100%;
-	} */
-	/* h1 {
-		font-size: 40px !important;
-	} */
 	.main-container {
 		padding: 15px;
 		text-align: center;
 		width: 100%;
 		height: 100%;
 		background-color: #566573;
+		overflow: hidden;
 		}
 	@media  only screen and (min-width: 300px) and (max-width: 479px) { 
 		.main-container {

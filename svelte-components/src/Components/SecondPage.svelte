@@ -6,7 +6,7 @@
     <input class="svelte-input-name secondary-font"
            type="text"
            placeholder="Enter your name and press save"
-           maxlength="15"/>
+           maxlength="10"/>
     <div class="inner-box">
       <button on:click|preventDefault data-role="setName">Save</button>
       <button on:click|preventDefault data-role="link" data-step="intro-page" >Watch result</button>

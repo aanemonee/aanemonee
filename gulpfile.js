@@ -12,7 +12,6 @@ const eslint = require('gulp-eslint');
 const uglify = require('gulp-uglify');
 const log = require('fancy-log');
 sass.compiler = require('node-sass');
-// const gulpSvelte = require('gulp-svelte');
 
 const paths = {
   styles: {

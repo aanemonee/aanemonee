@@ -9,12 +9,12 @@ const introText = document.querySelector('.intro-page__text');
 const skilsPageSlider = document.querySelector('.skills-page__content');
 const skilsPageLine = document.querySelector('.skills-page__content-box');
 const skillsPageItems = document.querySelectorAll('.skills-page__content-item');
-const sl = document.querySelector('.slider');
-const sln = document.querySelector('.slider-line');
-const si = document.querySelectorAll('.slider-item');
+const aboutPageSlider = document.querySelector('.slider');
+const aboutPageLine = document.querySelector('.slider-line');
+const aboutPageItems = document.querySelectorAll('.slider-item');
 const headerContent = document.querySelector('.site-header__content');
 
-// function
+// changing greeting text to welcome
 const clearName = (element) => {
   const elem = element;
   elem.innerText = 'Welcome';
@@ -48,17 +48,19 @@ const elemHeightChanger = (elem, a, b) => {
 
   return result;
 };
-/* constructor function for simple custom slider
- methods next\prev for switching between blocks\images
+/* simple custom slider constructor
+   methods next\prev for switching between blocks\images
  */
-const CustomSlider = function (el, elLine, elItems) {
+const CustomSlider = (el, elLine, elItems) => {
   const slider = el;
   const sliderItems = elItems;
   const sliderLine = elLine;
   let count = 0;
   let sliderWidth = 0;
 
+  // rolling slider to left/right
   const rollSlider = () => { sliderLine.style.transform = `translate(-${count * sliderWidth}px)`; };
+
   // recalculates width of sliderLine and sliderItems depends on slider width
   const init = () => {
     sliderWidth = slider.offsetWidth;
@@ -68,8 +70,9 @@ const CustomSlider = function (el, elLine, elItems) {
       slideritem.style.width = `${sliderWidth}px`;
       slideritem.style.height = 'auto';
     });
-    rollSlider();
   };
+  // resizing slider line and itens width on resizing window
+  init();
   window.addEventListener('resize', DEBOUNCE(init, 200));
 
   const next = () => {
@@ -88,14 +91,14 @@ const CustomSlider = function (el, elLine, elItems) {
     rollSlider();
   };
 
-  init();
   return {
     next,
     prev,
   };
 };
 
-const MYSLIDER = new CustomSlider(sl, sln, si);
+// creating instanse
+const mainSlider = new CustomSlider(aboutPageSlider, aboutPageLine, aboutPageItems);
 
 const togglePopup = (elem) => {
   const el = elem;
@@ -130,7 +133,8 @@ const clearLocalStorage = () => {
 };
 // global event listener
 document.addEventListener('DOMContentLoaded', () => {
-  skillsPageGridOrSlider();
+  // eslint-disable-next-line no-undef
+  skillsPageGridOrSlider(skilsPageSlider, skilsPageLine, skillsPageItems);
   // eslint-disable-next-line consistent-return
   document.addEventListener('click', () => {
     const ROLE = event.target.dataset.role;
@@ -154,10 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
         wayTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
       case 'slider-next':
-        MYSLIDER.next();
+        mainSlider.next();
         break;
       case 'slider-prev':
-        MYSLIDER.prev();
+        mainSlider.prev();
         break;
       case 'skills-slider-next':
         // eslint-disable-next-line no-undef
@@ -180,10 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let prevScrollPosition = window.pageYOffset;
   window.onscroll = DEBOUNCE(() => {
     const currentScrollPosition = window.pageYOffset;
-    // const height = (el) => {
-    //   const result = (el.offsetHeight === 50) ? '50px' : '200px';
-    //   return result;
-    // };
     const isMenuVisible = (el) => {
       const menuStatus = (el.offsetHeight === 90)
         ? (togglePopup(navMenu), elemHeightChanger(headerContent, 200, 50))

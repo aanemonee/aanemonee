@@ -49,12 +49,14 @@ if (localStorage.getItem('name') !== null) {
 // changing greeting text and saves nameValue to localStorage
 const sendName = (elem) => {
   const element = elem;
-  const nameValue = document.querySelector('.svelte-input-name').value;
+  const nameValue = document.querySelector('.svelte-input-name').value.trim();
+  if (nameValue === '') return false;
   element.innerText = `Welcome, ${nameValue}! Now reload page`;
   localStorage.setItem('name', nameValue);
 };
 // clear userName from localStorage
 const clearLocalStorage = () => {
+  document.querySelector('.svelte-input-name').value = '';
   localStorage.clear();
 };
 

@@ -688,6 +688,12 @@ a.nav-link:hover {
     background-color             : #566573;
     border-radius                : 15px 15px 0 0;
     transition                   : bottom 0.3s;
+    @include breakpoint(sm) {
+       bottom                    : -60px;
+    }
+    @include breakpoint(xs) {
+       bottom                    : -60px;
+    }
     
     &:hover {
         bottom                   : 0;

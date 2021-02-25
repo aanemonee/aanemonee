@@ -14,6 +14,28 @@ const aboutPageLine = document.querySelector('.slider-line');
 const aboutPageItems = document.querySelectorAll('.slider-item');
 const headerContent = document.querySelector('.site-header__content');
 
+// forces a fn function to wait certain amount of time before running again
+const DEBOUNCE = (fn, ms) => {
+  let timeout;
+  return function (...args) {
+    const fnCall = () => { fn.apply(this, args); };
+    clearTimeout(timeout);
+    timeout = setTimeout(fnCall, ms);
+  };
+};
+
+// laptop animation
+const laptopAnimation = (el, box) => {
+  const animatedElem = el;
+  const elemParent = box;
+  (elemParent) && (window.innerWidth > 1031) && elemParent.addEventListener('mousemove', DEBOUNCE((e) => {
+    const offsetX = ((e.clientX / window.innerWidth) * 30) - 15;
+    const offsetY = ((e.clientY / window.innerHeight) * 10) - 5;
+    const bgMove = animatedElem.setAttribute('style', `background-position: ${offsetX}px ${offsetY}px;`);
+    return bgMove;
+  }, 10));
+};
+// greeting page inner text functions
 // changing greeting text to welcome
 const clearName = (element) => {
   const elem = element;
@@ -31,16 +53,12 @@ const sendName = (elem) => {
   element.innerText = `Welcome, ${nameValue}! Now reload page`;
   localStorage.setItem('name', nameValue);
 };
-
-// forces a fn function to wait certain amount of time before running again
-const DEBOUNCE = (fn, ms) => {
-  let timeout;
-  return function (...args) {
-    const fnCall = () => { fn.apply(this, args); };
-    clearTimeout(timeout);
-    timeout = setTimeout(fnCall, ms);
-  };
+// clear userName from localStorage
+const clearLocalStorage = () => {
+  localStorage.clear();
 };
+
+// changes header menu height on menu click
 // switch height of elem between a and b values
 const elemHeightChanger = (elem, a, b) => {
   const el = elem;
@@ -48,7 +66,7 @@ const elemHeightChanger = (elem, a, b) => {
 
   return result;
 };
-/* simple custom slider constructor
+/* simple custom slider function
    methods next\prev for switching between blocks\images
  */
 const CustomSlider = (el, elLine, elItems) => {
@@ -100,24 +118,12 @@ const CustomSlider = (el, elLine, elItems) => {
 // creating instanse
 const mainSlider = new CustomSlider(aboutPageSlider, aboutPageLine, aboutPageItems);
 
+// mobile nav menu open\close
 const togglePopup = (elem) => {
   const el = elem;
   el.classList.toggle('visible-popup');
 };
-const toggleLight = (el) => { el.classList.toggle('hidden'); };
-const lightOnOpacity = (el) => { el.classList.toggle('low-opacity'); };
 
-const bgAnimation = (el, box) => {
-  const animatedElem = el;
-  const elemParent = box;
-  // eslint-disable-next-line no-unused-expressions
-  (elemParent) && (window.innerWidth > 1031) && elemParent.addEventListener('mousemove', DEBOUNCE((e) => {
-    const offsetX = ((e.clientX / window.innerWidth) * 30) - 15;
-    const offsetY = ((e.clientY / window.innerHeight) * 10) - 5;
-    const bgMove = animatedElem.setAttribute('style', `background-position: ${offsetX}px ${offsetY}px;`);
-    return bgMove;
-  }, 10));
-};
 let SKILLSLIDER = {};
 //  function switches grid and slider on skills-page
 function skillsPageGridOrSlider() {
@@ -128,31 +134,21 @@ function skillsPageGridOrSlider() {
   SKILLSLIDER = new CustomSlider(skilsPageSlider, skilsPageLine, skillsPageItems);
   return SKILLSLIDER;
 }
-const clearLocalStorage = () => {
-  localStorage.clear();
-};
 // global event listener
 document.addEventListener('DOMContentLoaded', () => {
-  // eslint-disable-next-line no-undef
   skillsPageGridOrSlider(skilsPageSlider, skilsPageLine, skillsPageItems);
-  // eslint-disable-next-line consistent-return
   document.addEventListener('click', () => {
     const ROLE = event.target.dataset.role;
-    const { step } = event.target.dataset;
-    const wayTo = document.querySelector(`#${step}`);
 
     if (!ROLE) return false;
+    const { step } = event.target.dataset;
+    const wayTo = document.querySelector(`#${step}`);
     event.preventDefault();
     // eslint-disable-next-line default-case
     switch (ROLE) {
       case 'mobile-main-nav':
         DEBOUNCE(elemHeightChanger(headerContent, 200, 50), 1000);
         DEBOUNCE(togglePopup(navMenu), 1000);
-        break;
-
-      case 'light-switcher':
-        toggleLight(bgLight);
-        lightOnOpacity(introText);
         break;
       case 'link':
         wayTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -164,11 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
         mainSlider.prev();
         break;
       case 'skills-slider-next':
-        // eslint-disable-next-line no-undef
         SKILLSLIDER.next();
         break;
       case 'skills-slider-prev':
-        // eslint-disable-next-line no-undef
         SKILLSLIDER.prev();
         break;
       case 'forgotName':
@@ -181,38 +175,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // function hides menu on scroll down
   let prevScrollPosition = window.pageYOffset;
   window.onscroll = DEBOUNCE(() => {
     const currentScrollPosition = window.pageYOffset;
+
+    // hide mobile navigation menu on scroll down
     const isMenuVisible = (el) => {
       const menuStatus = (el.offsetHeight === 90)
         ? (togglePopup(navMenu), elemHeightChanger(headerContent, 200, 50))
         : false;
       return menuStatus;
     };
+
     if (prevScrollPosition > currentScrollPosition) {
       document.querySelector('.site-header').style.top = '0';
-      // document.querySelector('.navigation-mobile').style.top = '0';
     } else {
       isMenuVisible(navMenu);
       document.querySelector('.site-header').style.top = '-50px';
-      // document.querySelector('.navigation-mobile').style.top = `-${height(navMenu)}`;
     }
     prevScrollPosition = currentScrollPosition;
   }, 50);
+
+  // turns off light and reduces opacity
   document.addEventListener('scroll', DEBOUNCE(() => {
-    //
     const aboutPage = document.querySelector('.about-page');
 
-    const aboutPageLol = aboutPage.getBoundingClientRect();
+    const aboutPageScrollPos = aboutPage.getBoundingClientRect();
 
-    if (window.pageYOffset > aboutPageLol.top) {
+    if (window.pageYOffset > aboutPageScrollPos.top) {
       bgLight.classList.add('hidden');
       introText.classList.add('low-opacity');
-    } else if (window.pageYOffset < aboutPageLol.top) {
+    } else if (window.pageYOffset < aboutPageScrollPos.top) {
       bgLight.classList.remove('hidden');
       introText.classList.remove('low-opacity');
     }
   }, 50));
-  bgAnimation(bgLaptop, introPage);
+  laptopAnimation(bgLaptop, introPage);
 });

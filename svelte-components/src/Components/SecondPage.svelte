@@ -25,7 +25,6 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin-bottom: 15px;
 }
 .svelte-input-name {
   outline: none;
@@ -46,18 +45,17 @@ button {
   outline: none;
   background-color: #566573;
   padding: 0 10px;
+  margin-bottom: 15px;
   border: 3px solid white;
   border-radius: 15px;
   cursor: pointer;
   transition: ease-in-out
-    color 0.3s,
-    background-color 0.3s,
-    border 0.3s;
+    color .3s,
+    border .3s;
 }
 button:hover {
-  color: rgba(44,62,80,0.8);
-  background-color: white;
-  border: 3px solid rgb(172 188 178);
+  color: #acbcb2;
+  border: 3px solid #acbcb2;
 }
 @media  only screen and (min-width: 479px) and (max-width: 699px) {
   button {

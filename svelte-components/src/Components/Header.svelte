@@ -9,6 +9,12 @@
     padding-bottom: 15px;
     line-height: 1.4;
   }
+  @media  only screen and (min-width: 992px) and (max-width: 1030px) { 
+    h2{ 
+    font-size: 20px;
+    padding-bottom: 10px;
+    }
+}
   @media  only screen and (min-width: 479px) and (max-width: 699px) {
       h2 {
         font-size: 15px;
